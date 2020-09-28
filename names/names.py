@@ -1,16 +1,52 @@
 import time
 
+class BSTNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+    def insert(self, value):
+
+        if self.value:
+            if value < self.value:
+                if self.left is None:
+                    self.left = BSTNode(value)
+                else:
+                    self.left.insert(value)
+            
+            elif value >= self.value:
+                if self.right is None:
+                    self.right = BSTNode(value)
+                else:
+                    self.right.insert(value)
+
+    def contains(self, target):
+
+        if target == self.value: 
+            return True
+        else:
+            if target < self.value:
+                if self.left is None:
+                    return False
+                else:
+                    return self.left.contains(target)
+            elif target >= self.value:
+                if self.right is None:
+                    return False
+                else:
+                    return self.right.contains(target)
 
 
 start_time = time.time()
 
-# f = open('names_1.txt', 'r')
-# names_1 = f.read().split("\n")  # List containing 10000 names
-# f.close()
+f = open('names_1.txt', 'r')
+names_1 = f.read().split("\n")  # List containing 10000 names
+f.close()
 
-# f = open('names_2.txt', 'r')
-# names_2 = f.read().split("\n")  # List containing 10000 names
-# f.close()
+f = open('names_2.txt', 'r')
+names_2 = f.read().split("\n")  # List containing 10000 names
+f.close()
 
 duplicates = []  # Return the list of duplicates in this data structure
 
@@ -20,54 +56,15 @@ duplicates = []  # Return the list of duplicates in this data structure
 #         if name_1 == name_2:
 #             duplicates.append(name_1)
 
-class Node: 
-    def __init__(self, value=None, next_node=None):
-        self.value = value
-        self.next_node = next_node
 
-    def get_val(self):
-        return self.value
+tree1 = BSTNode(names_1[0])
 
-    def get_next_node(self):
-        return self.next_node 
+for x in names_1:
+    tree1.insert(x)
 
-    def set_next_node(self, new_next):
-        self.next_node = new_next
-
-class LinkedList:
-    def __init__(self):
-        self.head = None
-        self.tail = None
-
-    def add_to_head(self, value):
-        new_node = Node(value)
-        if self.head is None: 
-            self.head = new_node
-            self.tail = new_node
-        else:
-            new_node.set_next_node(self.head)
-            self.head = new_node
-
-    def checkNodes(self, names_2):
-        fl = self.head
-        sl = names_2.head
-        while (fl != None and sl != None):
-            if (fl.value == sl.value):
-                duplicates.append(fl.value)
-            fl.next_node
-            sl.next_node
-
-f = open('names_1.txt', 'r')
-names_1 = LinkedList()
-names_1.add_to_head(f.read().split("\n"))  # List containing 10000 names
-f.close()
-
-
-f = open('names_2.txt', 'r')
-names_2 = LinkedList()
-names_2.add_to_head(f.read().split("\n"))  # List containing 10000 names
-f.close()
-
+for x in names_2:
+    if tree1.contains(x):
+        duplicates.append(x)
 
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
