@@ -49,4 +49,4 @@ class RingBufferTests(unittest.TestCase):
         self.assertEqual(self.buffer.get(), [45, 46, 47, 48, 49])
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main()  
